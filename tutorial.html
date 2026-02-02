@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pseudocode Tutorial</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px auto;
+      max-width: 800px;
+      line-height: 1.5;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      font-family: monospace;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    #output {
+      background: #f7f7f7;
+      border: 1px solid #ccc;
+      padding: 10px;
+      white-space: pre;
+      font-family: monospace;
+      font-size: 14px;
+    }
+    .btn {
+      padding: 8px 14px;
+      cursor: pointer;
+      background: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Interactive Pseudocode Tutorial</h1>
+
+  <p>
+    Pseudocode is a plain-English way to plan out how a program works before making real code.  
+    It isn’t strict — it’s about making the steps clear.
+  </p>
+
+  <strong>Task:</strong> Write a simple loop that prints numbers 1 to 5.
+  <textarea id="editor">
+// Example starter:
+// START
+// FOR i = 1 TO 5
+//   OUTPUT i
+// END FOR
+// END
+  </textarea>
+
+  <button class="btn" onclick="render()">Show Preview</button>
+  <button class="btn" onclick="resetExample()">Reset Example</button>
+
+  <h2>Preview</h2>
+  <div id="output"></div>
+
+  <script>
+    function render() {
+      const code = document.getElementById('editor').value;
+      // simple formatting:
+      const lines = code.split('\n')
+        .map(l => l.replace(/</g, "&lt;"))
+        .join('\n');
+      document.getElementById('output').innerHTML = lines;
+    }
+    function resetExample() {
+      document.getElementById('editor').value = `// START
+// FOR i = 1 TO 5
+//   OUTPUT i
+// END FOR
+// END`;
+      render();
+    }
+    // initial render
+    render();
+  </script>
+
+</body>
+</html>
