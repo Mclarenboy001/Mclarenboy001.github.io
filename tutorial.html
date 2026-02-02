@@ -1,88 +1,179 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pseudocode Tutorial</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pseudocode Playground</title>
+
+  <!-- Jekyll front matter -->
+  <!--
+  ---
+  layout: default
+  title: Pseudocode Playground
+  ---
+  -->
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px auto;
-      max-width: 800px;
-      line-height: 1.5;
+    :root {
+      --bg: #0f172a;
+      --panel: #020617;
+      --accent: #38bdf8;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
     }
+
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: linear-gradient(120deg, #020617, #020617 60%, #020617);
+      color: var(--text);
+    }
+
+    header {
+      padding: 20px;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    section {
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 0 0 1px #1e293b;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+
     textarea {
       width: 100%;
-      height: 200px;
-      font-family: monospace;
+      height: 260px;
+      background: #020617;
+      color: var(--text);
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 12px;
+      font-family: ui-monospace, monospace;
       font-size: 14px;
-      margin-bottom: 10px;
+      resize: vertical;
     }
-    #output {
-      background: #f7f7f7;
-      border: 1px solid #ccc;
-      padding: 10px;
-      white-space: pre;
-      font-family: monospace;
+
+    pre {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 12px;
+      white-space: pre-wrap;
+      font-family: ui-monospace, monospace;
       font-size: 14px;
     }
-    .btn {
-      padding: 8px 14px;
-      cursor: pointer;
-      background: #1a73e8;
-      color: white;
+
+    button {
+      background: var(--accent);
+      color: #020617;
       border: none;
-      border-radius: 4px;
-      margin-right: 6px;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+
+    button.secondary {
+      background: #1e293b;
+      color: var(--text);
+    }
+
+    footer {
+      padding: 16px 20px;
+      border-top: 1px solid #1e293b;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .task {
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>Interactive Pseudocode Tutorial</h1>
+<header>
+  <h1>Pseudocode Playground</h1>
+  <p style="color: var(--muted)">Write your own pseudocode or complete guided tasks</p>
+</header>
 
-  <p>
-    Pseudocode is a plain-English way to plan out how a program works before making real code.  
-    It isn’t strict — it’s about making the steps clear.
-  </p>
+<main>
+  <section>
+    <h2>Task</h2>
+    <div class="task">
+      <strong>Task 1:</strong><br>
+      Write pseudocode that outputs numbers from 1 to 5 using a loop.
+    </div>
 
-  <strong>Task:</strong> Write a simple loop that prints numbers 1 to 5.
-  <textarea id="editor">
-// Example starter:
-// START
-// FOR i = 1 TO 5
-//   OUTPUT i
-// END FOR
-// END
-  </textarea>
+    <button onclick="loadTask()">Load Task</button>
+    <button class="secondary" onclick="clearEditor()">Clear</button>
 
-  <button class="btn" onclick="render()">Show Preview</button>
-  <button class="btn" onclick="resetExample()">Reset Example</button>
+    <h2 style="margin-top:16px">Editor</h2>
+    <textarea id="editor"></textarea>
+  </section>
 
-  <h2>Preview</h2>
-  <div id="output"></div>
+  <section>
+    <h2>Sandbox Output</h2>
+    <pre id="output">Your pseudocode preview will appear here.</pre>
 
-  <script>
-    function render() {
-      const code = document.getElementById('editor').value;
-      // simple formatting:
-      const lines = code.split('\n')
-        .map(l => l.replace(/</g, "&lt;"))
-        .join('\n');
-      document.getElementById('output').innerHTML = lines;
-    }
-    function resetExample() {
-      document.getElementById('editor').value = `// START
-// FOR i = 1 TO 5
-//   OUTPUT i
-// END FOR
-// END`;
-      render();
-    }
-    // initial render
-    render();
-  </script>
+    <button onclick="runCode()">Run (Preview)</button>
+  </section>
+</main>
+
+<footer>
+  This is a learning sandbox — pseudocode is not executed, only previewed.
+</footer>
+
+<script>
+  const editor = document.getElementById('editor');
+  const output = document.getElementById('output');
+
+  function loadTask() {
+    editor.value = `START
+FOR i = 1 TO 5
+  OUTPUT i
+END FOR
+END`;
+    runCode();
+  }
+
+  function clearEditor() {
+    editor.value = '';
+    output.textContent = 'Editor cleared.';
+  }
+
+  function runCode() {
+    output.textContent = editor.value || 'Nothing to preview.';
+  }
+</script>
 
 </body>
 </html>
