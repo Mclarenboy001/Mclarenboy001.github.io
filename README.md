@@ -6,3 +6,4 @@ First ever github website
 
 SUBSITES:
 https://Mclarenboy001.github.io/tutorial.html    (PSUDEDOCODE playground)
+https://Mclarenboy001.github.io/inspector.html
